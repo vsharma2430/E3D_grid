@@ -1,3 +1,5 @@
+import os
+
 class point:
     x:float
     y:float
@@ -90,6 +92,12 @@ def form_gridplanes(posn:point,ori:str,idplan:str,no_refgln:int)-> str:
         refgln += refgln_enclose() + '\n'
     return gridpl_enclose(data=add_data(refgln,**{'POS':posn.getPMLString(),'ORI':ori,'IDPLAN':enclose_notation(idplan),'PPLIM':'false','UUID':'unset'}))
 
+def relation_grid(gridFace:int,ref_grid:str,ref_gln_no:str,grid_faces1_no:str,grid_pl1_no:str,grid_faces2_no:str,grid_pl2_no:str)->str:
+    res:str=''
+    res += f'OLD REFGLN {ref_gln_no} of GRIDPL {grid_pl1_no} of GRIDFACES {grid_faces1_no} of REFGRD {ref_grid}\n'
+    res += f'GRDREF GRIDPL {grid_pl2_no} of {'GRIDFACES' if gridFace==1 else 'GRIDELEVATION'} {grid_faces2_no} of REFGRD {ref_grid}\n'
+    return res
+
 origin = point(0,0,0)
 ref_grid = grid_data('/SS_04',point(1000,2000,3000))
 x_grid = [grid_data('1/B11',point(0,0,0)),grid_data('2/B11',point(2000,0,0)),grid_data('3/B11',point(3000,0,0))]
@@ -119,7 +127,12 @@ grid_faces.append(form_gridface(grllbl='Row',starti='A',gridaxe='Y',grid_planes=
 grid_faces.append(form_gridface(grllbl='Elev',starti='1',gridaxe='Z',grid_planes=z_grid_planes))
 
 grid_faces_final = add_list(grid_faces)
-#print(grid_faces_final)
-
 pml_db = grid_world_enclose(pml_db + '\n' + form_refgrd(ref_name=ref_grid.grid_label,origin=ref_grid.grid_delta,gridfaces=grid_faces_final))
-print(pml_db)
+
+#GRID RELATIONS CODE REMAINING
+#pml_db = add_str(pml_db,'\n'+relation_grid(1,0,0,0,0,0,0))
+
+out_file = (os.getcwd()+r'\E3D_grid\Result\Grid_Macro.mac')
+f = open(out_file, "w")
+f.write(pml_db)
+f.close()
