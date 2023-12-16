@@ -14,7 +14,7 @@ class point:
         return str(self.x) + ',' + str(self.y) + ',' +str(self.z)
     
     def getPMLString(self)-> str:
-        return 'E '+str(self.x) + 'mm N ' + str(self.y) + ' mm U ' +str(self.z) + 'mm'
+        return 'E '+str(self.x) + 'mm N ' + str(self.y) + 'mm U ' +str(self.z) + 'mm'
     
 class grid_data:
     grid_label:str
@@ -120,9 +120,11 @@ def relation_grid(gridFace1:int,gridFace2:int,ref_grid:str,ref_gln_no:str,grid_f
 #os.getcwd()+r'\E3D_grid\Result\Grid_Macro.mac'
 
 # FINAL DB FORMATION
-def build_macro(ref_grid,x_grid,y_grid,z_grid,new_old,out_file_location):
+def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_location):
     pml_db:str=''
     #pml_db = add_str(pml_db,'INPUT BEGIN' + '\n')
+
+    print('Creating grid ' + ref_grid.grid_label)
 
     if(new_old):
         pml_db = add_str(pml_db,form_facelb(grllbl='Axis',starti='1',gridaxe='X')+ '\n')
@@ -150,9 +152,12 @@ def build_macro(ref_grid,x_grid,y_grid,z_grid,new_old,out_file_location):
 
     if(new_old):
         pml_db = grid_world_enclose(pml_db + '\n' + ref_grid_final)
+    else:
+        pml_db = ref_grid_final
 
     #pml_db = add_str(pml_db,'INPUT FINISH' + '\n')
 
+    print(('New' if new_old else 'Old') + ' grid system')
     print('Opening file ' + out_file_location)
     f = open(out_file_location, "w")
     f.write(pml_db)

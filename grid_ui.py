@@ -14,15 +14,15 @@ def selectFile ():
 
 def saveFile():
     from tkinter.filedialog import asksaveasfile 
-    root = Tk() 
+    root = tk()
     root.geometry('200x150') 
     def save(): 
         files = [('All Files', '*.*'),  
                 ('Macro Files', '*.mac')] 
         file = asksaveasfile(filetypes = files, defaultextension = files) 
     
-    btn = ttk.Button(root, text = 'Save', command = lambda : save()) 
-    btn.pack(side = TOP, pady = 20) 
+    btn = tk.Button(root, text = 'Save', command = lambda : save()) 
+    btn.pack(side = tk.TOP, pady = 20) 
 
 def readLineByLine (fileLocation) : 
     file1 = open(fileLocation, 'r')
@@ -74,7 +74,6 @@ saveFile = saveLoc + r"\db.dat"
 if(not os.path.isdir(saveLoc)):
     os.mkdir(saveLoc)
 
-
 # Top level window 
 frame = tk.Tk() 
 frame.title("Grid E3D 1.0") 
@@ -92,16 +91,16 @@ framereference = tk.Frame(frame)
 label_reference = tk.Label(framereference, text = "Reference ",width=label_width,justify="left",anchor="w") 
 label_reference.pack(side="left")
 framereferenceInput=tk.Frame(framereference)
-input_reference_name = tk.Text(framereferenceInput, height = 1, width=int(input_width*0.25))
+input_reference_name = tk.Text(framereferenceInput, height = 1, width=int(input_width*0.2374))
 input_reference_X = tk.Text(framereferenceInput, height = 1, width=int(input_width*0.25))
 input_reference_Y = tk.Text(framereferenceInput, height = 1, width=int(input_width*0.25))
 input_reference_Z = tk.Text(framereferenceInput, height = 1, width=int(input_width*0.25))
-input_reference_name.pack(side="left")
-input_reference_X.pack(side="left")
-input_reference_Y.pack(side="left")
-input_reference_Z.pack(side="left")
-framereferenceInput.pack(side="left")
-framereference.pack(padx=5,pady=5)
+input_reference_name.pack(side="left",padx=0,pady=0)
+input_reference_X.pack(side="left",padx=0,pady=0)
+input_reference_Y.pack(side="left",padx=0,pady=0)
+input_reference_Z.pack(side="left",padx=0,pady=0)
+framereferenceInput.pack(side="left",padx=0,pady=0)
+framereference.pack(padx=0,pady=0)
 
 frameGridX = tk.Frame(frame)
 label_gridX = tk.Label(frameGridX, text = "X Axis",width=label_width,justify="left",anchor="w") 
@@ -136,14 +135,8 @@ input_gridZ_name.pack(side="top")
 frameGridZInput.pack(side="left")
 frameGridZ.pack(padx=5,pady=5)
 
-new_old:bool = True
 def sel():
-    if(var.get()==1):
-        new_old = True
-    else:
-        new_old = False
-   #selection = "You selected the option " + str(var.get())
-   #print(selection)
+    print("You selected the option " + str(var.get()))
 
 var = tk.IntVar()
 frameGridType = tk.Frame(frame)
@@ -163,9 +156,9 @@ frameOutput = tk.Frame(frame)
 labelFile = tk.Label(frameOutput, text = "Output",width=label_width,justify="left",anchor="w")  
 input_file = tk.Text(frameOutput, height = 1, width = int(input_width*0.8)) 
 input_button = tk.Button(frameOutput, text = "Select", command = saveFile,width=int(input_width*0.2),height=1) 
-labelFile.pack(side="left")
-input_file.pack(side="left")
-input_button.pack(side="left")
+labelFile.pack(side="left",padx=0,pady=0)
+input_file.pack(side="left",padx=0,pady=0)
+input_button.pack(side="left",padx=0,pady=0)
 frameOutput.pack(padx=5,pady=5)
 
 frameEIL = tk.Frame(frame)
@@ -197,14 +190,14 @@ def printInput():
     grid_refX = float(input_reference_X.get(1.0, "end-1c"))
     grid_refY = float(input_reference_Y.get(1.0, "end-1c"))
     grid_refZ = float(input_reference_Z.get(1.0, "end-1c"))
-    grid_ref_name = 'LBL'
+    grid_ref_name = input_reference_name.get(1.0, "end-1c") 
     out_file_location = input_file.get(1.0, "end-1c") 
     grid_ref = grid_data(label='/'+grid_ref_name,delta=point(grid_refX,grid_refY,grid_refZ))
     x_grid = getGridList(grid_names=gridXName,grid_values=gridXVal,dir=1)
     y_grid = getGridList(grid_names=gridYName,grid_values=gridYVal,dir=2)
     z_grid = getGridList(grid_names=gridZName,grid_values=gridZVal,dir=3)
+    new_old = True if (str(var.get())=='1') else False
     build_macro(grid_ref,x_grid,y_grid,z_grid,new_old,out_file_location)
-
     return
 
 # Button Creation 
