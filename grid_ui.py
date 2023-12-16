@@ -21,6 +21,7 @@ or
 {
 RUN generate_exec.bat
 }
+Executable is generated in dist folder
 """
 
 import tkinter as tk 

@@ -111,6 +111,7 @@ def relation_grid(gridFace1:int,gridFace2:int,ref_grid:str,ref_gln_no:str,grid_f
         res += f'GRDREF GRIDPL {grid_pl2_no} of GRIDELEVATION {grid_faces2_no} of REFGRD {ref_grid}\n'
     return res
 
+#TEST VARIABLES
 #ref_grid = grid_data('/TEST_GRID',point(3687250,3640000,99700))
 #x_grid = [grid_data('1/B11',point(0,0,0)),grid_data('2/B11',point(19500,0,0)),grid_data('3/B11',point(26500,0,0)),grid_data('4/B11',point(32750,0,0)),grid_data('5/B11',point(40500,0,0)),grid_data('6/B11',point(48750,0,0))]
 #y_grid = [grid_data('X7',point(0,0,0)),grid_data('X8',point(0,10000,0)),grid_data('X9',point(0,15000,0))]
