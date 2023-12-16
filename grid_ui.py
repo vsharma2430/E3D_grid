@@ -1,10 +1,35 @@
+#STEPS TO GENERATE EXECUTABLE
+"""
+1.
+INSTALL PYTHON
+
+2.
+USE PIP TO INSTALL VIRTUAL ENV - pip install virtualenv
+
+3.
+MAKE VIRTUAL ENV -  python<version> -m venv env 
+                or
+MAKE VIRTUAL ENV -  py -m venv env 
+ACTIVATE VIRTUAL ENV - env/Scripts/activate.bat 
+
+4.
+{
+INSTALL REQUIREMENTS IN VIRTUAL ENV - pip install -r requirements.txt
+GENERATE EXE FILE - pyinstaller grid_ui.py
+}
+or
+{
+RUN generate_exec.bat
+}
+"""
+
 import tkinter as tk 
 from tkinter import messagebox
 from tkinter.filedialog import asksaveasfile
 import os
 from os.path import basename
-from grid_base import grid_data,point
-from grid_base import build_macro
+from grid_base.grid_base import grid_data,point
+from grid_base.grid_base import build_macro
 
 saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
 saveFile = os.getenv('LOCALAPPDATA') + r"\GridPy\db.dat"
