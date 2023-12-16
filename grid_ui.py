@@ -1,28 +1,29 @@
 import tkinter as tk 
 from tkinter import messagebox
+from tkinter.filedialog import asksaveasfile
 import os
 from os.path import basename
 from grid_base import grid_data,point
 from grid_base import build_macro
 
-def selectFile ():
+saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
+saveFile = os.getenv('LOCALAPPDATA') + r"\GridPy\db.dat"
+
+if(not os.path.isdir(saveLoc)):
+    os.mkdir(saveLoc)
+
+def selectFile():
     from tkinter import Tk
     from tkinter.filedialog import askopenfilename
     Tk().withdraw()
     filename = askopenfilename()
     return (filename)
 
-def saveFile():
-    from tkinter.filedialog import asksaveasfile 
-    root = tk()
-    root.geometry('200x150') 
-    def save(): 
-        files = [('All Files', '*.*'),  
-                ('Macro Files', '*.mac')] 
-        file = asksaveasfile(filetypes = files, defaultextension = files) 
-    
-    btn = tk.Button(root, text = 'Save', command = lambda : save()) 
-    btn.pack(side = tk.TOP, pady = 20) 
+def saveFile_win():
+    f = asksaveasfile(initialfile = 'Untitled.mac',
+            defaultextension=".mac",filetypes=[("All Files","*.*"),("Macro Files","*.mac")])
+    tk.Tk().withdraw()
+    return f.name
 
 def readLineByLine (fileLocation) : 
     file1 = open(fileLocation, 'r')
@@ -80,7 +81,7 @@ frame.title("Grid E3D 1.0")
 frame.geometry('800x400') 
 
 def selectOutputFile():
-    output_file = selectFile()
+    output_file = saveFile_win()
     input_file.delete(1.0,"end")
     input_file.insert(tk.END,output_file)
 
@@ -143,11 +144,11 @@ frameGridType = tk.Frame(frame)
 label_GridType = tk.Label(frameGridType, text = "Grid Type",width=label_width,justify="left",anchor="w") 
 label_GridType.pack(side="left")
 frameGridTypeInput=tk.Frame(frameGridType)
-input_GridType_New = tk.Radiobutton(frameGridTypeInput, text="New", variable=var, value=1, command=sel,width=int(input_width*1.1),anchor=tk.W)
+input_GridType_New = tk.Radiobutton(frameGridTypeInput, text="New", variable=var, value=1, command=sel,width=int(input_width*0.53),anchor=tk.W)
 input_GridType_New.select()
-input_GridType_Old = tk.Radiobutton(frameGridTypeInput, text="Old", variable=var, value=2, command=sel,width=int(input_width*1.1),anchor=tk.W)
-input_GridType_New.pack(side="top",anchor=tk.W)
-input_GridType_Old.pack(side="top",anchor=tk.W)
+input_GridType_Old = tk.Radiobutton(frameGridTypeInput, text="Old", variable=var, value=2, command=sel,width=int(input_width*0.53),anchor=tk.W)
+input_GridType_New.pack(side="left",anchor=tk.W)
+input_GridType_Old.pack(side="left",anchor=tk.W)
 frameGridTypeInput.pack(side="left",anchor=tk.W)
 frameGridType.pack(padx=5,pady=5)
 
@@ -155,7 +156,7 @@ frameGridType.pack(padx=5,pady=5)
 frameOutput = tk.Frame(frame)
 labelFile = tk.Label(frameOutput, text = "Output",width=label_width,justify="left",anchor="w")  
 input_file = tk.Text(frameOutput, height = 1, width = int(input_width*0.8)) 
-input_button = tk.Button(frameOutput, text = "Select", command = saveFile,width=int(input_width*0.2),height=1) 
+input_button = tk.Button(frameOutput, text = "Select", command = lambda:selectOutputFile(),width=int(input_width*0.2),height=1) 
 labelFile.pack(side="left",padx=0,pady=0)
 input_file.pack(side="left",padx=0,pady=0)
 input_button.pack(side="left",padx=0,pady=0)
@@ -204,5 +205,21 @@ def printInput():
 createButton = tk.Button(frame, text = "Create Macro",  command = printInput,width=25,height=2) 
 createButton.pack(padx=10,pady=10) 
 frameEIL.pack(padx=5,pady=5,anchor=tk.S)
+
+def loadUI():
+    saveData = readLineByLine(saveFile)
+    size = len(saveData)
+    return
+
+def saveUI():
+    return
+
+def on_closing():
+    saveUI()
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        frame.destroy()
+        exit()
+
+frame.protocol("WM_DELETE_WINDOW", on_closing)
 
 frame.mainloop() 
