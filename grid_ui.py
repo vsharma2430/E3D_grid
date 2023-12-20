@@ -95,16 +95,10 @@ def getGridList(grid_names:str,grid_values:str,dir:int):
 
     return grid_list
 
-saveLoc = os.getenv('LOCALAPPDATA') + r"\GridE3D"
-saveFile = saveLoc + r"\db.dat"
-
-if(not os.path.isdir(saveLoc)):
-    os.mkdir(saveLoc)
-
 # Top level window 
 frame = tk.Tk() 
-frame.title("Grid E3D 1.0") 
-frame.geometry('800x400') 
+frame.title("Grid E3D 1.1") 
+frame.geometry('800x350') 
 
 def selectOutputFile():
     output_file = saveFile_win()
@@ -194,31 +188,33 @@ lblName2 = tk.Label(frameEIL, text = "©Engineers India Limited",font=("Comic Sa
 lblName1.pack(side="left")
 lblName2.pack(side="right")
 
-input_reference_name.insert(1.0,'MYGRID')
-input_reference_X.insert(1.0,'1000')
-input_reference_Y.insert(1.0,'2000')
-input_reference_Z.insert(1.0,'3000')
-input_gridX_name.insert(1.0,'A B C D')
-input_gridX_value.insert(1.0,'0 1000 2*2000')
-input_gridY_name.insert(1.0,'1 2 3')
-input_gridY_value.insert(1.0,'0 2*2500')
-input_gridZ_name.insert(1.0,'1')
-input_gridZ_value.insert(1.0,'0')
-desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
-input_file.insert(1.0,desktop+r'\macro.mac')
+def defaultData (): 
+    print('Loading default input')
+    input_reference_name.insert(1.0,'MYGRID')
+    input_reference_X.insert(1.0,'1000')
+    input_reference_Y.insert(1.0,'2000')
+    input_reference_Z.insert(1.0,'3000')
+    input_gridX_name.insert(1.0,'A B C D')
+    input_gridX_value.insert(1.0,'0 1000 2*2000')
+    input_gridY_name.insert(1.0,'1 2 3')
+    input_gridY_value.insert(1.0,'0 2*2500')
+    input_gridZ_name.insert(1.0,'1')
+    input_gridZ_value.insert(1.0,'0')
+    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+    input_file.insert(1.0,desktop+r'\macro.mac')
 
 def printInput(): 
-    gridXName = input_gridX_name.get(1.0, "end-1c") 
-    gridYName = input_gridY_name.get(1.0, "end-1c") 
-    gridZName = input_gridZ_name.get(1.0, "end-1c") 
-    gridXVal = input_gridX_value.get(1.0, "end-1c") 
-    gridYVal = input_gridY_value.get(1.0, "end-1c") 
-    gridZVal = input_gridZ_value.get(1.0, "end-1c") 
-    grid_refX = float(input_reference_X.get(1.0, "end-1c"))
-    grid_refY = float(input_reference_Y.get(1.0, "end-1c"))
-    grid_refZ = float(input_reference_Z.get(1.0, "end-1c"))
-    grid_ref_name = input_reference_name.get(1.0, "end-1c") 
-    out_file_location = input_file.get(1.0, "end-1c") 
+    gridXName = input_gridX_name.get(1.0, tk.END).strip() 
+    gridYName = input_gridY_name.get(1.0, tk.END).strip() 
+    gridZName = input_gridZ_name.get(1.0, tk.END).strip()  
+    gridXVal = input_gridX_value.get(1.0, tk.END).strip()  
+    gridYVal = input_gridY_value.get(1.0, tk.END).strip()  
+    gridZVal = input_gridZ_value.get(1.0, tk.END).strip()  
+    grid_refX = float(input_reference_X.get(1.0, tk.END).strip() )
+    grid_refY = float(input_reference_Y.get(1.0, tk.END).strip() )
+    grid_refZ = float(input_reference_Z.get(1.0, tk.END).strip() )
+    grid_ref_name = input_reference_name.get(1.0, tk.END).strip()  
+    out_file_location = input_file.get(1.0, tk.END).strip()  
     grid_ref = grid_data(label='/'+grid_ref_name,delta=point(grid_refX,grid_refY,grid_refZ))
     x_grid = getGridList(grid_names=gridXName,grid_values=gridXVal,dir=1)
     y_grid = getGridList(grid_names=gridYName,grid_values=gridYVal,dir=2)
@@ -233,11 +229,56 @@ createButton.pack(padx=10,pady=10)
 frameEIL.pack(padx=5,pady=5,anchor=tk.S)
 
 def loadUI():
-    saveData = readLineByLine(saveFile)
-    size = len(saveData)
-    return
+    if(os.path.exists(saveFile)):
+        print('Loading last input')
+        saveData = readLineByLine(saveFile)
+        size = len(saveData)
+        if(size>9):
+            input_reference_name.insert(1.0,saveData[0])
+            input_reference_X.insert(1.0,saveData[1])
+            input_reference_Y.insert(1.0,saveData[2])
+            input_reference_Z.insert(1.0,saveData[3])
+            input_gridX_name.insert(1.0,saveData[4])
+            input_gridX_value.insert(1.0,saveData[5])
+            input_gridY_name.insert(1.0,saveData[6])
+            input_gridY_value.insert(1.0,saveData[7])
+            input_gridZ_name.insert(1.0,saveData[8])
+            input_gridZ_value.insert(1.0,saveData[9])
+            input_file.insert(1.0,saveData[10])
+        else:
+            defaultData()
+    else:
+        defaultData()
 
 def saveUI():
+    save_data = []
+    grid_ref_name = input_reference_name.get(1.0, tk.END).strip()  
+    grid_refX = input_reference_X.get(1.0, tk.END).strip()
+    grid_refY = input_reference_Y.get(1.0, tk.END).strip()
+    grid_refZ = input_reference_Z.get(1.0, tk.END).strip()
+    gridXName = input_gridX_name.get(1.0, tk.END).strip() 
+    gridXVal = input_gridX_value.get(1.0, tk.END).strip()  
+    gridYName = input_gridY_name.get(1.0, tk.END).strip() 
+    gridYVal = input_gridY_value.get(1.0, tk.END).strip()  
+    gridZName = input_gridZ_name.get(1.0, tk.END).strip()  
+    gridZVal = input_gridZ_value.get(1.0, tk.END).strip()  
+    out_file_location = input_file.get(1.0, tk.END).strip()  
+    save_data.append(grid_ref_name)
+    save_data.append(grid_refX)
+    save_data.append(grid_refY)
+    save_data.append(grid_refZ)
+    save_data.append(gridXName)
+    save_data.append(gridXVal)
+    save_data.append(gridYName)
+    save_data.append(gridYVal)
+    save_data.append(gridZName)
+    save_data.append(gridZVal)
+    save_data.append(out_file_location)
+
+    print("Saving last input")
+    f = open(saveFile,'w')
+    f.write('\n'.join(save_data))
+    f.close()
     return
 
 def on_closing():
@@ -246,6 +287,6 @@ def on_closing():
         frame.destroy()
         exit()
 
+loadUI()
 frame.protocol("WM_DELETE_WINDOW", on_closing)
-
 frame.mainloop() 
