@@ -9,9 +9,9 @@ f = open(lic_file, "r")
 lic_user_map = {}
 
 for line in f.read().splitlines():
-    if('STRLDA' in line or 'STRLAS' in line):
+    if('STRL' in line):
         line_split = line.split(':')
-        lic_type = line_split[0]
+        lic_type = line_split[0]+'-'+line_split[1]
         users_list = line_split[len(line_split)-1]
         lic_user_map[lic_type] = users_list
 

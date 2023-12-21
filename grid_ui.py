@@ -285,7 +285,7 @@ def on_closing():
     saveUI()
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         frame.destroy()
-        exit()
+        exit
 
 loadUI()
 frame.protocol("WM_DELETE_WINDOW", on_closing)
