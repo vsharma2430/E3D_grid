@@ -29,8 +29,10 @@ from tkinter import messagebox
 from tkinter.filedialog import asksaveasfile
 import os
 from os.path import basename
-from grid_base.grid_base import grid_data,point
+from grid_base.grid import grid_data
+from grid_base.point import point
 from grid_base.grid_base import build_macro
+from misc.calc_time import calculate_time
 
 saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
 saveFile = os.getenv('LOCALAPPDATA') + r"\GridPy\db.dat"
@@ -157,7 +159,10 @@ frameGridZInput.pack(side="left")
 frameGridZ.pack(padx=5,pady=5)
 
 def sel():
-    print("You selected the option " + str(var.get()))
+    if(str(var.get())=="1"):
+        print("You selected the option - New")
+    else:
+        print("You selected the option - Old")
 
 var = tk.IntVar()
 frameGridType = tk.Frame(frame)
@@ -203,7 +208,8 @@ def defaultData ():
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
     input_file.insert(1.0,desktop+r'\macro.mac')
 
-def printInput(): 
+@calculate_time
+def generate_macro(): 
     gridXName = input_gridX_name.get(1.0, tk.END).strip() 
     gridYName = input_gridY_name.get(1.0, tk.END).strip() 
     gridZName = input_gridZ_name.get(1.0, tk.END).strip()  
@@ -220,11 +226,13 @@ def printInput():
     y_grid = getGridList(grid_names=gridYName,grid_values=gridYVal,dir=2)
     z_grid = getGridList(grid_names=gridZName,grid_values=gridZVal,dir=3)
     new_old = True if (str(var.get())=='1') else False
+
     build_macro(grid_ref,x_grid,y_grid,z_grid,new_old,out_file_location)
+
     return
 
 # Button Creation 
-createButton = tk.Button(frame, text = "Create Macro",  command = printInput,width=25,height=2) 
+createButton = tk.Button(frame, text = "Create Macro",  command = generate_macro,width=25,height=2) 
 createButton.pack(padx=10,pady=10) 
 frameEIL.pack(padx=5,pady=5,anchor=tk.S)
 
