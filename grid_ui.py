@@ -33,6 +33,7 @@ from grid_base.grid import grid_data
 from grid_base.point import point
 from grid_base.grid_base import build_macro
 from misc.calc_time import calculate_time
+from misc.clipboard import copy2clip
 
 saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
 saveFile = os.getenv('LOCALAPPDATA') + r"\GridPy\db.dat"
@@ -227,7 +228,8 @@ def generate_macro():
     z_grid = getGridList(grid_names=gridZName,grid_values=gridZVal,dir=3)
     new_old = True if (str(var.get())=='1') else False
 
-    build_macro(grid_ref,x_grid,y_grid,z_grid,new_old,out_file_location)
+    pml_command :str = build_macro(grid_ref,x_grid,y_grid,z_grid,new_old,out_file_location)
+    copy2clip(pml_command)
 
     return
 

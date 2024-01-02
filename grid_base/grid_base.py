@@ -34,7 +34,7 @@ def form_gridplanes(posn:point,ori:str,idplan:str,no_refgln:int)-> str:
     refgln:str=''
     for i in range(no_refgln):
         refgln += refgln_enclose() + '\n'
-    return gridpl_enclose(data=add_data(refgln,**{'POS':posn.getPMLString(),'ORI':ori,'IDPLAN':enclose_notation(idplan)}))
+    return gridpl_enclose(name = r'/'+idplan,data=add_data(refgln,**{'POS':posn.getPMLString(),'ORI':ori,'IDPLAN':enclose_notation(idplan)}))
 
 
 def relation_grid(gridFace1:int,gridFace2:int,ref_grid:str,ref_gln_no:str,grid_faces1_no:str,grid_pl1_no:str,grid_faces2_no:str,grid_pl2_no:str)->str:
@@ -59,7 +59,7 @@ def relation_grid(gridFace1:int,gridFace2:int,ref_grid:str,ref_gln_no:str,grid_f
 #os.getcwd()+r'\E3D_grid\Result\Grid_Macro.mac'
 
 # FINAL DB FORMATION
-def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_location):
+def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_location)->str:
     pml_db:str=''
     #pml_db = add_str(pml_db,'INPUT BEGIN' + '\n')
 
@@ -102,6 +102,8 @@ def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_locatio
     f.write(pml_db)
     f.close()
     print('File closed')
+    
+    return pml_db
 
 
 #GRID RELATIONS CODE - NOT REQUIRED
