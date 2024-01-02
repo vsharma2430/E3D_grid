@@ -97,12 +97,14 @@ def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_locatio
     #pml_db = add_str(pml_db,'INPUT FINISH' + '\n')
 
     print(('New' if new_old else 'Old') + ' grid system')
-    print('Opening file ' + out_file_location)
-    f = open(out_file_location, "w")
-    f.write(pml_db)
-    f.close()
-    print('File closed')
-    
+
+    if(out_file_location!=None or out_file_location!=''):
+        print('Opening file ' + out_file_location)
+        f = open(out_file_location, "w")
+        f.write(pml_db)
+        f.close()
+        print('File closed')
+        
     return pml_db
 
 

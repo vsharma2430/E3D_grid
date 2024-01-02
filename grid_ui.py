@@ -231,6 +231,7 @@ def generate_macro():
     pml_command :str = build_macro(grid_ref,x_grid,y_grid,z_grid,new_old,out_file_location)
     copy2clip(pml_command)
 
+    print('PML command copied to clipboard.Paste in command window of E3D to create grids.')
     return
 
 # Button Creation 
