@@ -3,4 +3,6 @@ packaging==23.2
 pefile==2023.2.7
 pyinstaller==6.3.0
 pyinstaller-hooks-contrib==2023.10
+pyperclip==1.8.2
 pywin32-ctypes==0.2.2
+setuptools==69.0.2
