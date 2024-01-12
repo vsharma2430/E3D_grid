@@ -141,8 +141,8 @@ def createUI():
     frameOutput.pack(padx=5,pady=5)
 
     frameEIL = tk.Frame(frame)
-    lblName1 = tk.Label(frameEIL, text = "Developed with ❤ by Vaibhav Sharma",font=("Comic Sans MS",10) ,anchor="w",width=50)  
-    lblName2 = tk.Label(frameEIL, text = "©Engineers India Limited",font=("Comic Sans MS", 10) ,anchor="e",width=50) 
+    lblName1 = tk.Label(frameEIL, text = "Developed with ❤ by Vaibhav Sharma",font=("Monospace MS",10) ,anchor="w",width=50)  
+    lblName2 = tk.Label(frameEIL, text = "© Engineers India Limited",font=("Monospace MS", 10) ,anchor="e",width=50) 
     lblName1.pack(side="left")
     lblName2.pack(side="right")
 

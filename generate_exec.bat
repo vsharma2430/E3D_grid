@@ -1,2 +1,2 @@
 pip install -r requirements.txt
-pyinstaller grid_ui.py --onefile
+pyinstaller grid_ui.py 
