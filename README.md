@@ -31,7 +31,7 @@ python -m PyQt5.uic.pyuic -x ui/mainWin.ui -o ui/mainWin.py
 ## Git Steps
 
 1. Clone Repository <br>
-git clone <remote_location>
+git clone <remote_location>     <br>
 git clone https://gitlab.eil.co.in/structural/e3d_grids.git
 
 2. Commit <br>
