@@ -21,7 +21,7 @@ pyinstaller grid_ui.py --onefile --windowed
 pip freeze > requirements.txt
 
 * PyQt Designer <br>
-pyqt5-tools designer <ui_file_location>
+pyqt5-tools designer <ui_file_location>     <br>
 pyqt5-tools designer ui/mainWin.ui
 
 * Convert ui file to py file <br>
