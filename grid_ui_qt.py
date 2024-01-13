@@ -1,6 +1,7 @@
 import os
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow,QPushButton,QHBoxLayout,QVBoxLayout,QWidget,QMessageBox,QDockWidget,QStatusBar)
+from PyQt5.QtWidgets import (QApplication, QMainWindow,QPushButton,QHBoxLayout,QVBoxLayout,
+                             QWidget,QMessageBox,QDockWidget,QStatusBar)
 from PyQt5.QtGui import QIcon, QTextCursor, QColor
 from PyQt5.QtCore import Qt
 from ui.common_helper import getHSeparator,getIconButton,getFont
@@ -34,7 +35,6 @@ class GridGenerator(QMainWindow):
         self.statusBar.setFont(getFont(12))
         self.statusBar.showMessage('Grid Generator')
         self.show()
-
 
 # Run program
 if __name__ == "__main__":

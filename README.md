@@ -3,6 +3,7 @@ This application is created for generating PML command to model grids in E3D.
 
 STEPS TO CREATE VIRTUAL ENV
 1. Create env
+    <python_location> -m venv env
     C:\Users\D097\AppData\Local\Programs\Python\Python39\python.exe -m venv env
 2. Install requirements to venv
     pip install -r requirements.txt
@@ -16,6 +17,9 @@ MISC STEPS
     pip freeze > requirements.txt
 * PyQt Designer
     pyqt5-tools designer
+* Convert ui file to py file 
+    python -m PyQt5.uic.pyuic -x [FILENAME].ui -o [FILENAME].py
+    python -m PyQt5.uic.pyuic -x ui/mainWin.ui -o ui/mainWin.py
 
 GIT Steps
 1. Clone Repository
