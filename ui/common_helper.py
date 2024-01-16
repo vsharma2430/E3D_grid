@@ -6,7 +6,10 @@ from PyQt5.QtWidgets import (
     QLabel,
     QFrame,
     QTextEdit,
-    QSizePolicy
+    QSizePolicy,
+    QRadioButton,
+    QTableWidget,
+    QTableWidgetItem
 )
 import os
 
@@ -48,6 +51,28 @@ def getButton(clickFunction,text:str="Button",fontSize:int=12,framewidth:int=100
     button.clicked.connect(clickFunction)
     return button
 
+def getRadioButton(clickFunction,text:str="RadioButton",fontSize:int=12,maxWidth:int=500,framewidth:int=100,frameHeight:int=40):
+    radioButton = QRadioButton()
+    radioButton.setText(text)
+    radioButton.setMaximumWidth(maxWidth)
+    radioButton.setMinimumWidth(framewidth)
+    radioButton.setMinimumHeight(frameHeight)
+    radioButton.setFont(getFont(fontSize))
+    radioButton.clicked.connect(clickFunction)
+    return radioButton
+
+def getTableWidget(fontSize:int=12,maxWidth:int=500,minWidth:int=100,frameHeight:int=40):
+    tableWidget = QTableWidget()
+    tableWidget.setMinimumWidth(minWidth)
+    tableWidget.setMinimumHeight(frameHeight)
+    tableWidget.setMaximumWidth(maxWidth)
+    tableWidget.setFont(getFont(fontSize))
+    return tableWidget
+
+def getTableWidgetItem(data:str=''):
+    tableWidgetItem = QTableWidgetItem(data)
+    return tableWidgetItem
+
 def getQIcon(imagename):
     imagename = os.path.basename(imagename)
     if(os.path.exists('./images')):
@@ -58,7 +83,7 @@ def getQIcon(imagename):
 def getIconButton(clickFunction,imagePath:str,framewidth:int=100,frameHeight:int=40,iconPadding:int=2,text:str="",fontSize:int=14):
     button = QPushButton()
     button.setIcon(getQIcon(imagePath))
-    button.setMinimumWidth(framewidth)
+    button.setFixedWidth(framewidth)
     button.setMinimumHeight(frameHeight)
     button.clicked.connect(clickFunction)
     button.setIconSize(QSize(framewidth-iconPadding,frameHeight-iconPadding))

@@ -11,6 +11,8 @@ from grid_base.grid_base import build_macro
 from misc.calc_time import calculate_time
 from misc.clipboard import copy2clip
 from misc.file_UI import saveFile_win_mac,readLineByLine
+from ui.reference_stack import ReferenceWidget
+from ui.output_stack import OutputWidget
 
 saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
 saveFile = saveLoc+ r"\db.dat"
@@ -20,6 +22,9 @@ if(not os.path.isdir(saveLoc)):
     os.mkdir(saveLoc)
 
 class GridGenerator(QMainWindow):
+
+    reference_widget : ReferenceWidget
+
     def __init__(self):
         super().__init__()
         self.initializeUI()
@@ -29,6 +34,15 @@ class GridGenerator(QMainWindow):
         self.setWindowTitle('Grid Generator 2.0')
         mainWidget = QWidget()
         mainDataStack = QVBoxLayout()
+
+        self.reference_widget = ReferenceWidget()
+        self.output_widget = OutputWidget()
+
+        mainDataStack.addWidget(self.reference_widget)
+        mainDataStack.addWidget(self.output_widget)
+
+        mainWidget.setLayout(mainDataStack)
+        self.setCentralWidget(mainWidget)
 
         self.statusBar:QStatusBar = QStatusBar()
         self.setStatusBar(self.statusBar)
