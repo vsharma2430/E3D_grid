@@ -9,8 +9,10 @@ from PyQt5.QtWidgets import (
     QSizePolicy,
     QRadioButton,
     QTableWidget,
-    QTableWidgetItem
+    QTableWidgetItem,
+    QComboBox
 )
+from tkinter import messagebox
 import os
 
 def getEditText(hintText:str="",minWidth:int=30,maxWidth:int=500,height:int=30,maxHeight:int=100,fontSize:int=12):
@@ -85,7 +87,8 @@ def getIconButton(clickFunction,imagePath:str,framewidth:int=100,frameHeight:int
     button.setIcon(getQIcon(imagePath))
     button.setFixedWidth(framewidth)
     button.setMinimumHeight(frameHeight)
-    button.clicked.connect(clickFunction)
+    if(clickFunction!=None):
+        button.clicked.connect(clickFunction)
     button.setIconSize(QSize(framewidth-iconPadding,frameHeight-iconPadding))
     if(text!=""):
         button.setText(text)
@@ -111,3 +114,21 @@ def getVSeparator():
     Separator.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Minimum)
     Separator.setLineWidth(2)
     return Separator
+
+
+def getYesNoBox(header:str='Confirmation',message:str='Do you want to proceed?'):
+    result = messagebox.askyesno(header, message)
+    if result:
+        return True
+    else:
+        return False
+    
+def getComboBox(data : list[str]=[],fontSize:int=12,maxWidth:int=500,minWidth:int=100,frameHeight:int=40):
+    combo = QComboBox()
+    combo.setMinimumWidth(minWidth)
+    combo.setMinimumHeight(frameHeight)
+    combo.setMaximumWidth(maxWidth)
+    combo.setFont(getFont(fontSize))
+    for dataX in data:
+        combo.addItem(dataX)
+    return combo
