@@ -10,19 +10,22 @@ def selectFile():
     return (filename)
 
 def saveFile_win_mac():
-    f = asksaveasfile(initialfile = 'Untitled.mac',
-            defaultextension=".mac",filetypes=[("All Files","*.*"),("Macro Files","*.mac")])
+    f = asksaveasfile(initialfile = 'Untitled.dat',
+            defaultextension=".dat",filetypes=[("All Files","*.*"),("Grid Database File","*.dat")])
     tk.Tk().withdraw()
     return f.name
 
 def readLineByLine (fileLocation) : 
-    file1 = open(fileLocation, 'r')
-    Lines = file1.readlines()
+    print(fileLocation)
     readLines = []
-    count = 0
-    # Strips the newline character
-    for line in Lines:
-        count += 1
-        readLines.append(line.strip())
-        #print("Line{}: {}".format(count, line.strip()))
+    if(fileLocation!=None and fileLocation!=''):
+        file1 = open(fileLocation, 'r')
+        Lines = file1.readlines()
+        count = 0
+        # Strips the newline character
+        for line in Lines:
+            count += 1
+            readLines.append(line.strip())
+            #print("Line{}: {}".format(count, line.strip()))
+        file1.close()
     return readLines

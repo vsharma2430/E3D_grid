@@ -59,7 +59,9 @@ def relation_grid(gridFace1:int,gridFace2:int,ref_grid:str,ref_gln_no:str,grid_f
 #os.getcwd()+r'\E3D_grid\Result\Grid_Macro.mac'
 
 # FINAL DB FORMATION
-def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_location)->str:
+def build_macro(ref_grid:grid_data,x_grid:list[grid_data],y_grid:list[grid_data],z_grid:list[grid_data],
+                new_old:bool=False,out_file_location:str='')->str:
+   
     pml_db:str=''
     #pml_db = add_str(pml_db,'INPUT BEGIN' + '\n')
 
@@ -98,7 +100,7 @@ def build_macro(ref_grid:grid_data,x_grid,y_grid,z_grid,new_old,out_file_locatio
 
     print(('New' if new_old else 'Old') + ' grid system')
 
-    if(out_file_location!=None or out_file_location!=''):
+    if(out_file_location!=None and out_file_location!=''):
         print('Opening file ' + out_file_location)
         f = open(out_file_location, "w")
         f.write(pml_db)

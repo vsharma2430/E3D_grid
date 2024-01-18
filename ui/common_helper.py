@@ -82,9 +82,10 @@ def getQIcon(imagename):
     else:
         return QIcon('_internal/img/'+ imagename)
 
-def getIconButton(clickFunction,imagePath:str,framewidth:int=100,frameHeight:int=40,iconPadding:int=2,text:str="",fontSize:int=14):
+def getIconButton(clickFunction=None,imagePath:str='',framewidth:int=100,frameHeight:int=40,iconPadding:int=2,text:str="",fontSize:int=14):
     button = QPushButton()
-    button.setIcon(getQIcon(imagePath))
+    if(imagePath!=''):
+        button.setIcon(getQIcon(imagePath))
     button.setFixedWidth(framewidth)
     button.setMinimumHeight(frameHeight)
     if(clickFunction!=None):
@@ -95,8 +96,10 @@ def getIconButton(clickFunction,imagePath:str,framewidth:int=100,frameHeight:int
         button.setFont(getFont(fontSize))
     return button
 
-def getFont(fontSize):
-    font = QFont("Arial")
+def getFont(fontSize:int=12,fontname:str=''):
+    font = QFont()
+    if(fontname!=''):
+        font.setFamily('Bahnschrift')
     font.setPointSize(fontSize)
     font.styleHint = QFont.Monospace
     return font
@@ -132,3 +135,6 @@ def getComboBox(data : list[str]=[],fontSize:int=12,maxWidth:int=500,minWidth:in
     for dataX in data:
         combo.addItem(dataX)
     return combo
+
+def getFloat(data:str)->float:
+    return 0 if data=='' or data==None else float(data)

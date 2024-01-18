@@ -17,6 +17,7 @@ class ReferenceWidget(QWidget):
         super().__init__()
         self.initializeUI()
         self.createUI()
+        return
     
     def initializeUI(self):
         self.setMinimumHeight(50)
@@ -27,11 +28,12 @@ class ReferenceWidget(QWidget):
         self.reference_Y = getLineEdit(hintText='Y(mm)')
         self.reference_Z = getLineEdit(hintText='Z(mm)')
         self.old_new_grid = getComboBox(['New','Old'],frameHeight=30)
+        return
 
     def createUI(self):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
-        groupBox = QGroupBox('Reference Point')
+        groupBox = QGroupBox('Reference')
         self.layout.addWidget(groupBox)
 
         hbox = QHBoxLayout()
@@ -41,3 +43,10 @@ class ReferenceWidget(QWidget):
         hbox.addWidget(self.reference_X)
         hbox.addWidget(self.reference_Y)
         hbox.addWidget(self.reference_Z)
+        return
+
+    def clearUI(self):
+        self.reference_name.clear()
+        self.reference_X.clear()
+        self.reference_Y.clear()
+        self.reference_Z.clear()

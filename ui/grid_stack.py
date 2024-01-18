@@ -209,6 +209,14 @@ class GridDataWidget(QWidget):
         groupBox.setLayout(vbox_main)
         return
 
+    def clearUI(self):
+        self.grid_names.clear()
+        self.grid_values.clear()
+        self.count_editline.setText('0')
+        self.grid_names_editline.setText('')
+        self.grid_values_editline.setText('')
+        self.refresh_view_down()
+    
 class GridStack(QWidget):
 
     x_grid_data : GridDataWidget
@@ -233,6 +241,25 @@ class GridStack(QWidget):
         self.hbox.addWidget(self.z_grid_data)
         self.setLayout(self.hbox)
         return
+    
+    def clearUI(self):
+        self.x_grid_data.clearUI()
+        self.y_grid_data.clearUI()
+        self.z_grid_data.clearUI()
+        return
+
+    def reference_up(self):
+        self.x_grid_data.refresh_view_up()
+        self.y_grid_data.refresh_view_up()
+        self.z_grid_data.refresh_view_up()
+        return
+
+    def reference_down(self):
+        self.x_grid_data.refresh_view_down()
+        self.y_grid_data.refresh_view_down()
+        self.z_grid_data.refresh_view_down()
+        return
+
 
 # Run program
 """
