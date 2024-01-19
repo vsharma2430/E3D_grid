@@ -50,3 +50,5 @@ git push origin main
 4. Get remotes <br>
 git remote -v
 
+## Application shortcut
+Enter the path in windows run : %LOCALAPPDATA%\TCC\APP\grid_ui_qt\grid_ui_qt.exe

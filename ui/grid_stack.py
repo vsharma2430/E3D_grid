@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot
 from ui.common_helper import getIconButton,getLineEdit,getTableWidget,getTableWidgetItem
 
-def separate_grid_name(grid_names:str):
+def separate_grid_name(grid_names:str)->list[str]:
     if(grid_names!=''):
         grid_name_split = grid_names.split(' ')
         grid_name_split_1 = []
@@ -15,7 +15,7 @@ def separate_grid_name(grid_names:str):
         return grid_name_split_1
     return []
 
-def separate_grid_value(grid_values:str):
+def separate_grid_value(grid_values:str)->list[str]:
     if(grid_values!=''):
         grid_val_split = grid_values.split(' ')
         grid_val_split_1 = []
@@ -29,9 +29,9 @@ def separate_grid_value(grid_values:str):
                 rep = int(grid_valX_split[0].strip())
                 valX = float(grid_valX_split[1].strip())
                 for i in range(rep):
-                    grid_vals.append(float(valX))
+                    grid_vals.append(str(valX))
             else:
-                grid_vals.append(valX)
+                grid_vals.append(str(valX))
         return grid_vals
     return []
 
