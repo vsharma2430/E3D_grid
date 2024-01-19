@@ -10,10 +10,10 @@ config_images = map(lambda fx : '--add-data=' + os.path.abspath('images') + "\\"
 
 config_data = []
 
-generate_type = 3
+generate_type = 4
 #generate_type = int(input("Enter exe config type : "))
 
-#Type 1 is not working some problem with pyinstaller
+#doesn't work because of windows defender
 if(generate_type==1):
     config_data.append('grid_ui_qt.py')
     config_data.append('--onefile')
@@ -24,10 +24,13 @@ elif (generate_type == 2):
     config_data.append('grid_ui_qt.py')
     config_data.append('--onefile')
 
-#outgoing config generator
+#doesn't work because of windows defender
 elif (generate_type == 3):
     config_data.append('grid_ui_qt.py')
     config_data.append('--windowed')
+
+elif (generate_type == 4):
+    config_data.append('grid_ui_qt.py')
 
 config_data.extend(config_images)
 PyInstaller.__main__.run(config_data)

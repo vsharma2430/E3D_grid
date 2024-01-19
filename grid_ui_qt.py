@@ -1,15 +1,12 @@
 import os
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow,QPushButton,QHBoxLayout,QVBoxLayout,
-                             QWidget,QMessageBox,QDockWidget,QStatusBar,QAction)
-from PyQt5.QtGui import QIcon, QTextCursor, QColor
+from PyQt5.QtWidgets import (QApplication, QMainWindow,QVBoxLayout,
+                             QWidget,QMessageBox,QDockWidget,QStatusBar)
 from PyQt5.QtCore import Qt,pyqtSlot
 from ui.common_helper import getIconButton,getFont,getQIcon,getFloat,getHSeparator
 from grid_base.grid import grid_data,getGridList
 from grid_base.point import point
 from grid_base.grid_base import build_macro
-from misc.calc_time import calculate_time
-from misc.clipboard import copy2clip
 from misc.file_UI import saveFile_win_mac,selectFile,readLineByLine
 from ui.reference_stack import ReferenceWidget
 from ui.output_stack import OutputWidget

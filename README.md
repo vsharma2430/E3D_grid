@@ -1,6 +1,10 @@
 # About
 This application is created for generating PML command to model grids in E3D.
 
+Python version used - 3.9.13  
+Python version supported - (3.0 to 3.9)
+Pyqt5 designer supports 3.9 only.
+
 ## Steps for virtual env
 
 1. Create virtual env <br>
@@ -8,12 +12,14 @@ This application is created for generating PML command to model grids in E3D.
 C:\Users\D097\AppData\Local\Programs\Python\Python39\python.exe -m venv env
 
 2. Install requirements to venv <br>
-pip install -r requirements.txt
+pip install -r <requirements file location> <br>
+pip install -r developer_requirements.txt   <br>
+pip install -r publish_requirements.txt
 
 3. Create Executable <br>
 generate_exec.py <br>
 OR <br>
-pyinstaller grid_ui.py --onefile --windowed 
+pyinstaller grid_ui.py 
 
 ## PyQt Steps
 
