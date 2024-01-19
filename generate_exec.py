@@ -34,3 +34,6 @@ elif (generate_type == 4):
 
 config_data.extend(config_images)
 PyInstaller.__main__.run(config_data)
+
+if(int(input('Publish to server?'))==1):
+    os.system(r'C:\Users\D097\source\repos\E3D_Grid\E3D_grid\publish_server.bat')

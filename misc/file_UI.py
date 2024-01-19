@@ -1,6 +1,7 @@
 import tkinter as tk 
 from tkinter import messagebox
 from tkinter.filedialog import asksaveasfile
+import os 
 
 def selectFile():
     from tkinter import Tk
@@ -16,9 +17,8 @@ def saveFile_win_mac():
     return f.name
 
 def readLineByLine (fileLocation) : 
-    print(fileLocation)
     readLines = []
-    if(fileLocation!=None and fileLocation!=''):
+    if(fileLocation!=None and fileLocation!='' and os.path.exists(fileLocation)):
         file1 = open(fileLocation, 'r')
         Lines = file1.readlines()
         count = 0
