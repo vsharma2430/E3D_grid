@@ -32,8 +32,16 @@ elif (generate_type == 3):
 elif (generate_type == 4):
     config_data.append('grid_ui_qt.py')
 
-config_data.extend(config_images)
-PyInstaller.__main__.run(config_data)
+if(generate_type!=5):
+    config_data.extend(config_images)
+    PyInstaller.__main__.run(config_data)
 
 if(int(input('Publish to server?'))==1):
     os.system(r'C:\Users\D097\source\repos\E3D_Grid\E3D_grid\publish_server.bat')
+
+current_version : int = 0
+version_file = r'\\10.40.10.46\itstrl\RELEASE\TCCLIVE\TeklaModules\ver.dat'
+with open(version_file ,'+r') as file:
+    current_version = int(file.read())
+with open(version_file ,'+w') as file:
+    file.write(str(current_version+1))

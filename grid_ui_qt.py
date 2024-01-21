@@ -207,5 +207,5 @@ if __name__ == "__main__":
     clipboard = app.clipboard()
     window = GridGenerator()
     window.setFont(getFont(fontSize=11))
-    window.loadFile()
+    window.loadFile(save_file_location)
     sys.exit(app.exec_())
