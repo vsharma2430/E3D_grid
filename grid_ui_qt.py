@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QMainWindow,QVBoxLayout,
                              QWidget,QMessageBox,QDockWidget,QStatusBar)
 from PyQt5.QtCore import Qt,pyqtSlot
+from PyQt5.QtGui import QClipboard
 from ui.common_helper import getIconButton,getFont,getQIcon,getFloat,getHSeparator
 from grid_base.grid import grid_data,getGridList
 from grid_base.point import point
@@ -21,12 +22,14 @@ if(not os.path.isdir(save_directory)):
 
 class GridGenerator(QMainWindow):
 
+    clipboard : QClipboard 
     reference_widget : ReferenceWidget
     output_widget : OutputWidget
     grid_widget : GridStack
 
-    def __init__(self):
+    def __init__(self,clipB:QClipboard):
         super().__init__()
+        self.clipboard = clipB
         self.initializeUI()
         self.defineDock()
 
@@ -161,7 +164,7 @@ class GridGenerator(QMainWindow):
 
         self.reference_widget = ReferenceWidget()
         self.output_widget = OutputWidget()
-        self.grid_widget = GridStack()
+        self.grid_widget = GridStack(self)
 
         mainDataStack.addWidget(self.reference_widget)
         mainDataStack.addWidget(self.grid_widget)
@@ -205,7 +208,7 @@ class GridGenerator(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     clipboard = app.clipboard()
-    window = GridGenerator()
+    window = GridGenerator(clipboard)
     window.setFont(getFont(fontSize=11))
     window.loadFile(save_file_location)
     sys.exit(app.exec_())

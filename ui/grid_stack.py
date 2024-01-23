@@ -3,12 +3,12 @@ import sys
 import time
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import *
 from ui.common_helper import getIconButton,getLineEdit,getTableWidget,getTableWidgetItem
 
 def separate_grid_name(grid_names:str)->list[str]:
     if(grid_names!=''):
-        grid_name_split = grid_names.split(' ')
+        grid_name_split = grid_names.strip().split(' ')
         grid_name_split_1 = []
         for x in grid_name_split:
             grid_name_split_1.extend(x.split(','))
@@ -17,7 +17,7 @@ def separate_grid_name(grid_names:str)->list[str]:
 
 def separate_grid_value(grid_values:str)->list[str]:
     if(grid_values!=''):
-        grid_val_split = grid_values.split(' ')
+        grid_val_split = grid_values.strip().split(' ')
         grid_val_split_1 = []
         for x in grid_val_split:
             grid_val_split_1.extend(x.split(','))
@@ -35,8 +35,10 @@ def separate_grid_value(grid_values:str)->list[str]:
         return grid_vals
     return []
 
+
 class GridDataWidget(QWidget):
 
+    parent : QMainWindow
     grid_type : str
     add_button : QPushButton
     save_button : QPushButton
@@ -55,11 +57,12 @@ class GridDataWidget(QWidget):
     grid_names : list[str] = []
     grid_values : list[float] = []
         
-    def __init__(self,grid_type:str):
+    def __init__(self,grid_type:str,parent:QMainWindow):
         super().__init__()
         self.grid_type = grid_type
         self.initializeUI()
         self.createUI()
+        self.parent = parent
         #self.show()
 
     @pyqtSlot()
@@ -165,6 +168,38 @@ class GridDataWidget(QWidget):
         self.grid_values_editline.setText(" ".join(grid_vals))
 
         return
+    
+    @pyqtSlot()
+    def mousePressEvent1(self, event):
+        if event.button() == Qt.MouseButton.RightButton :
+            self.grid_names_editline.clear()
+            self.grid_names_editline.setText(self.parent.clipboard.text())
+            self.count_editline.setText(str(len(separate_grid_name(self.grid_names_editline.text()))))
+        else: 
+            super().mousePressEvent(event)
+
+    @pyqtSlot()
+    def mousePressEvent2(self, event):
+        if event.button() == Qt.MouseButton.RightButton :
+            self.grid_values_editline.clear()
+            self.grid_values_editline.setText(self.parent.clipboard.text())
+            self.count_editline.setText(str(len(separate_grid_value(self.grid_values_editline.text()))))
+            self.refresh_view_down()
+        else: 
+            super().mousePressEvent(event)
+
+    @pyqtSlot()
+    def keyPressEvent1(self, e):
+        if(e.key() == Qt.Key_Enter):
+            self.count_editline.setText(str(len(separate_grid_name(self.grid_names_editline.text()))))
+        else:
+            super().keyPressEvent(e)
+        return
+
+    @pyqtSlot()
+    def keyPressEvent2(self, e):
+        self.count_editline.setText(str(len(separate_grid_value(self.grid_values_editline.text()))))
+        return
 
     def initializeUI(self):
         self.setMinimumHeight(250)
@@ -175,7 +210,12 @@ class GridDataWidget(QWidget):
         self.sync_row.setMinimumWidth(175)
         self.count_editline = getLineEdit('Count',minWidth=175,maxWidth=400,fontSize=12)
         self.grid_names_editline = getLineEdit('Grid names',minWidth=175,maxWidth=400,fontSize=12)
+        # self.grid_names_editline.keyPressEvent =  self.keyPressEvent1
+        # self.grid_names_editline.mouseDoubleClickEvent =  self.keyPressEvent1
+        self.grid_names_editline.mousePressEvent =  self.mousePressEvent1
         self.grid_values_editline = getLineEdit('Grid values (mm)',minWidth=175,maxWidth=400,fontSize=12)
+        #self.grid_values_editline.mouseDoubleClickEvent =  self.keyPressEvent2
+        self.grid_values_editline.mousePressEvent =  self.mousePressEvent2
         self.grid_table = getTableWidget(fontSize=12,minWidth=175,frameHeight=175,maxWidth=400)
         self.formTable()
         self.add_button = getIconButton(clickFunction=self.add_button_command,imagePath='images/add.png',framewidth=50,frameHeight=30)
@@ -222,16 +262,18 @@ class GridStack(QWidget):
     x_grid_data : GridDataWidget
     y_grid_data : GridDataWidget
     z_grid_data : GridDataWidget
+    main_window : QMainWindow
 
-    def __init__(self):
+    def __init__(self,parent:QMainWindow):
         super().__init__()
+        self.main_window = parent
         self.initializeUI()
         self.createUI()
 
     def initializeUI(self): 
-        self.x_grid_data = GridDataWidget(grid_type='X')
-        self.y_grid_data = GridDataWidget(grid_type='Y')
-        self.z_grid_data = GridDataWidget(grid_type='Z')
+        self.x_grid_data = GridDataWidget(grid_type='X',parent= self.main_window)
+        self.y_grid_data = GridDataWidget(grid_type='Y',parent= self.main_window)
+        self.z_grid_data = GridDataWidget(grid_type='Z',parent= self.main_window)
         return
     
     def createUI(self):

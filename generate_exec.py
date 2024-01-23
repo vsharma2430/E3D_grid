@@ -9,6 +9,7 @@ for fileX in config_images[:]: # filelist[:] makes a copy of filelist.
 config_images = map(lambda fx : '--add-data=' + os.path.abspath('images') + "\\" + fx + ':img' , config_images )
 
 config_data = []
+config_data.append('--noconfirm')
 
 generate_type = 4
 #generate_type = int(input("Enter exe config type : "))
@@ -32,9 +33,8 @@ elif (generate_type == 3):
 elif (generate_type == 4):
     config_data.append('grid_ui_qt.py')
 
-if(generate_type!=5):
-    config_data.extend(config_images)
-    PyInstaller.__main__.run(config_data)
+config_data.extend(config_images)
+PyInstaller.__main__.run(config_data)
 
 if(int(input('Publish to server?'))==1):
     os.system(r'C:\Users\D097\source\repos\E3D_Grid\E3D_grid\publish_server.bat')
