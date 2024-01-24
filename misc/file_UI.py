@@ -1,20 +1,4 @@
-import tkinter as tk 
-from tkinter import messagebox
-from tkinter.filedialog import asksaveasfile
 import os 
-
-def selectFile():
-    from tkinter import Tk
-    from tkinter.filedialog import askopenfilename
-    Tk().withdraw()
-    filename = askopenfilename()
-    return (filename)
-
-def saveFile_win_mac():
-    f = asksaveasfile(initialfile = 'Untitled.dat',
-            defaultextension=".dat",filetypes=[("All Files","*.*"),("Grid Database File","*.dat")])
-    tk.Tk().withdraw()
-    return f.name
 
 def readLineByLine (fileLocation) : 
     readLines = []

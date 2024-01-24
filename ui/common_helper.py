@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtGui import (QFont,QIcon)
 from PyQt5.QtCore import (QSize)
 from PyQt5.QtWidgets import (
@@ -10,10 +11,10 @@ from PyQt5.QtWidgets import (
     QRadioButton,
     QTableWidget,
     QTableWidgetItem,
-    QComboBox
+    QComboBox,
+    QFileDialog,
+    QMessageBox
 )
-from tkinter import messagebox
-import os
 
 def getEditText(hintText:str="",minWidth:int=30,maxWidth:int=500,height:int=30,maxHeight:int=100,fontSize:int=12):
     editText = QTextEdit()
@@ -117,14 +118,6 @@ def getVSeparator():
     Separator.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Minimum)
     Separator.setLineWidth(2)
     return Separator
-
-
-def getYesNoBox(header:str='Confirmation',message:str='Do you want to proceed?'):
-    result = messagebox.askyesno(header, message)
-    if result:
-        return True
-    else:
-        return False
     
 def getComboBox(data : list[str]=[],fontSize:int=12,maxWidth:int=500,minWidth:int=100,frameHeight:int=40):
     combo = QComboBox()
@@ -138,3 +131,22 @@ def getComboBox(data : list[str]=[],fontSize:int=12,maxWidth:int=500,minWidth:in
 
 def getFloat(data:str)->float:
     return 0 if data=='' or data==None else float(data)
+
+def pyqtSaveFileDialog(parent,default_file_name:str=""):
+    fileName, _ = QFileDialog.getSaveFileName(parent=parent,caption='Save File',filter='Grid database Files (*.dat)')
+    if fileName:
+        return fileName
+    return ''
+
+def pyqtOpenFileDialog(parent):
+    fileName, _ = QFileDialog.getOpenFileName(parent=parent,filter='Grid database Files (*.dat)')
+    if fileName:
+        return fileName
+    return ''
+
+def getYesNoBox(parent,header:str='Confirmation',message:str='Do you want to proceed?'):
+    result = QMessageBox.question(parent,header,message, QMessageBox.Yes | QMessageBox.No) 
+    if result == QMessageBox.Yes:
+        return True
+    else:
+        return False

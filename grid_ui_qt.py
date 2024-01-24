@@ -1,14 +1,13 @@
 import os
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow,QVBoxLayout,
-                             QWidget,QMessageBox,QDockWidget,QStatusBar)
+from PyQt5.QtWidgets import (QApplication, QMainWindow,QVBoxLayout,QWidget,QMessageBox,QDockWidget,QStatusBar)
 from PyQt5.QtCore import Qt,pyqtSlot
 from PyQt5.QtGui import QClipboard
-from ui.common_helper import getIconButton,getFont,getQIcon,getFloat,getHSeparator
+from ui.common_helper import getIconButton,getFont,getQIcon,getFloat,getHSeparator,pyqtSaveFileDialog,pyqtOpenFileDialog
 from grid_base.grid import grid_data,getGridList
 from grid_base.point import point
 from grid_base.grid_base import build_macro
-from misc.file_UI import saveFile_win_mac,selectFile,readLineByLine
+from misc.file_UI import readLineByLine
 from ui.reference_stack import ReferenceWidget
 from ui.output_stack import OutputWidget
 from ui.grid_stack import GridStack
@@ -38,7 +37,6 @@ class GridGenerator(QMainWindow):
         reply = QMessageBox.question(self, 'Quit?',
                                      'Are you sure you want to quit?',
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-
         if reply == QMessageBox.Yes:
             if not type(event) == bool:
                 event.accept()
@@ -73,9 +71,12 @@ class GridGenerator(QMainWindow):
         save_data.append(gridZVal)
 
         print("Saving last input")
-        f = open(file_location,'w')
-        f.write('\n'.join(save_data))
-        f.close()
+
+        if(file_location==''):
+            file_location = save_file_location
+
+        with open(file_location,'w') as f:
+            f.write('\n'.join(save_data))
         
         self.statusBar.showMessage('File saved : ' + file_location)
         return
@@ -108,16 +109,18 @@ class GridGenerator(QMainWindow):
 
     @pyqtSlot()
     def saveUI_command(self):
-        save_file_path = saveFile_win_mac()
-        self.saveFile(file_location=save_file_path)
-        self.statusBar.showMessage('File saved : ' + save_file_path)
+        save_file_path = pyqtSaveFileDialog(self)
+        if(save_file_path!=None):
+            self.saveFile(file_location=save_file_path)
+            self.statusBar.showMessage('File saved : ' + save_file_path)
         return
     
     @pyqtSlot()
     def loadUI_command(self):
-        load_file_path = selectFile()
-        self.loadFile(file_location=load_file_path)
-        self.statusBar.showMessage('File loaded : ' + load_file_path)
+        load_file_path = pyqtOpenFileDialog(self)
+        if(load_file_path!=None):
+            self.loadFile(file_location=load_file_path)
+            self.statusBar.showMessage('File loaded : ' + load_file_path)
         return
 
     @pyqtSlot()
