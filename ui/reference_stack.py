@@ -1,9 +1,6 @@
 #import necessary modules 
-from PyQt5.QtWidgets import (QWidget, QAction, QVBoxLayout,QHBoxLayout,QPushButton,QLineEdit,
-    QMessageBox, QTextEdit, QFileDialog, QInputDialog, QFontDialog,QGroupBox,QGridLayout,QSpinBox)
-from PyQt5.QtGui import QTextCursor, QColor
-from PyQt5.QtCore import Qt
-from ui.common_helper import getIconButton,getLabel,getEditText,getLineEdit,getComboBox
+from PyQt5.QtWidgets import (QWidget, QHBoxLayout,QLineEdit,QGroupBox,QGridLayout,QSpinBox)
+from ui.common_helper import getLineEdit,getComboBox
 
 class ReferenceWidget(QWidget):
 

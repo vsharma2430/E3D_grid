@@ -1,8 +1,7 @@
 #import necessary modules 
-from PyQt5.QtWidgets import (QWidget, QAction, QVBoxLayout,QHBoxLayout,QPushButton,QLineEdit,
-    QMessageBox, QTextEdit, QFileDialog, QInputDialog, QFontDialog,QGroupBox,QGridLayout)
+from PyQt5.QtWidgets import (QWidget,QHBoxLayout,QTextEdit,QGroupBox,QGridLayout)
 from PyQt5.QtCore import Qt
-from ui.common_helper import getIconButton,getEditText
+from ui.common_helper import getEditText
 
 class OutputWidget(QWidget):
 

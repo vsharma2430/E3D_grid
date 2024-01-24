@@ -28,17 +28,16 @@ Executable is generated in dist folder
     Generate requirements.txt
     pip freeze > requirements.txt
 """
-
+import os
 import tkinter as tk 
 from tkinter import messagebox
-from tkinter.filedialog import asksaveasfile
-import os
 from grid_base.grid import grid_data,getGridList
 from grid_base.point import point
 from grid_base.grid_base import build_macro
 from misc.calc_time import calculate_time
 from misc.clipboard import copy2clip
-from misc.file_UI import saveFile_win_mac,readLineByLine
+from misc.file_UI import readLineByLine
+from misc.tkinter_dialog import saveFile_win_mac
 
 saveLoc = os.getenv('LOCALAPPDATA') + r"\GridPy"
 saveFile = saveLoc+ r"\db.dat"
