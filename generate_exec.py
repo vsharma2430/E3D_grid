@@ -38,9 +38,11 @@ def generate_exec():
     config_data.extend(config_images)
     PyInstaller.__main__.run(config_data)
 
-if(input('Generate new executable [Y/n] ? [n]')=='Y'):
+if(input('Generate new executable [Y/n] ? [n] ')=='Y'):
     generate_exec()
-    
-if(input('Publish to server [Y/n] ? [n]')=='Y'):
+    print('Exectutable generated')
+
+if(input('Publish to server [Y/n] ? [n] ')=='Y'):
     os.system(r'C:\Users\D097\source\repos\E3D_Grid\E3D_grid\publish_server.bat')
     increment_tcc_ver()
+    print('Exectutable published')
