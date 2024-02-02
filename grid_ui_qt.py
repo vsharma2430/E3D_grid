@@ -1,6 +1,6 @@
 import os
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow,QVBoxLayout,QWidget,QMessageBox,QDockWidget,QStatusBar)
+from PyQt5.QtWidgets import (QApplication,QMainWindow,QVBoxLayout,QWidget,QMessageBox,QDockWidget,QStatusBar)
 from PyQt5.QtCore import Qt,pyqtSlot
 from PyQt5.QtGui import QClipboard
 from ui.common_helper import getIconButton,getFont,getQIcon,getFloat,getHSeparator,pyqtSaveFileDialog,pyqtOpenFileDialog
@@ -145,10 +145,38 @@ class GridGenerator(QMainWindow):
         y_grid : list[grid_data] = getGridList(grid_names=self.grid_widget.y_grid_data.grid_names_editline.text(),grid_values=self.grid_widget.y_grid_data.grid_values_editline.text(),dir=2)
         z_grid : list[grid_data] = getGridList(grid_names=self.grid_widget.z_grid_data.grid_names_editline.text(),grid_values=self.grid_widget.z_grid_data.grid_values_editline.text(),dir=3)
         new_old : bool = True if self.reference_widget.old_new_grid.currentIndex() == 0 else False
-        pml_command : str = build_macro(ref_grid=ref_grid,x_grid=x_grid,y_grid=y_grid,z_grid=z_grid,new_old=new_old)
-        self.output_widget.output.setText(pml_command)
-        clipboard.setText(pml_command)
-        self.statusBar.showMessage('Grid generated and macro copied to clipboard')
+        all_grids_list : list[grid_data] = []
+        all_grids_list.extend(x_grid)
+        all_grids_list.extend(y_grid)
+        all_grids_list.extend(z_grid)
+        all_grid_name_count = dict()
+        for gridX in all_grids_list:
+            if(gridX.grid_label in all_grid_name_count.keys()):
+                all_grid_name_count[gridX.grid_label] = all_grid_name_count[gridX.grid_label] + 1
+            else :
+                all_grid_name_count[gridX.grid_label] = 1
+        
+        invalidNames : list[str] = []
+        correct_names : bool = True
+        for keyX in all_grid_name_count.keys():
+            if(all_grid_name_count[keyX]>1):
+                invalidNames.append(keyX)
+                correct_names = False
+
+        if(ref_grid.grid_label.strip(r'/') in all_grid_name_count.keys()):
+            invalidNames.append(ref_grid.grid_label.strip(r'/'))
+            correct_names = False
+
+            
+        if(correct_names):
+            pml_command : str = build_macro(ref_grid=ref_grid,x_grid=x_grid,y_grid=y_grid,z_grid=z_grid,new_old=new_old)
+            self.output_widget.output.setText(pml_command)
+            clipboard.setText(pml_command)
+            self.statusBar.showMessage('Grid generated and macro copied to clipboard')
+        else:
+            self.output_widget.output.setText('Duplicate names : ' + ' , '.join(invalidNames))
+            self.statusBar.showMessage('Incorrect names')
+
         return
     
     @pyqtSlot()

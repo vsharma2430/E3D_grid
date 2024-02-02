@@ -36,12 +36,11 @@ elif (generate_type == 4):
 config_data.extend(config_images)
 PyInstaller.__main__.run(config_data)
 
-if(int(input('Publish to server?'))==1):
+if(input('Publish to server [Y/n] ? [n]')=='Y'):
     os.system(r'C:\Users\D097\source\repos\E3D_Grid\E3D_grid\publish_server.bat')
-
-current_version : int = 0
-version_file = r'\\10.40.10.46\itstrl\RELEASE\TCCLIVE\TeklaModules\ver.dat'
-with open(version_file ,'+r') as file:
-    current_version = int(file.read())
-with open(version_file ,'+w') as file:
-    file.write(str(current_version+1))
+    current_version : int = 0
+    version_file = r'\\10.40.10.46\itstrl\RELEASE\TCCLIVE\TeklaModules\ver.dat'
+    with open(version_file ,'+r') as file:
+        current_version = int(file.read())
+    with open(version_file ,'+w') as file:
+        file.write(str(current_version+1))
