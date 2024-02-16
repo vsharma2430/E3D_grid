@@ -36,12 +36,12 @@ python -m PyQt5.uic.pyuic -x ui/mainWin.ui -o ui/mainWin.py
 
 ## Generate Pdoc Documentation <br>
 
-*Main UI - pdoc --html --output-dir documentation grid_ui_qt.py
-*Grids - pdoc --html --output-dir documentation grid_base
-*UI base - pdoc --html --output-dir documentation ui
-*Misc - pdoc --html --output-dir documentation misc
+* Main UI - pdoc --html --output-dir documentation grid_ui_qt.py
+* Grids - pdoc --html --output-dir documentation grid_base
+* UI base - pdoc --html --output-dir documentation ui
+* Misc - pdoc --html --output-dir documentation misc
 
-###Batch file to generate documentation - generate_documentation.bat
+### Batch file to generate documentation - generate_documentation.bat
 
 ## Git Steps
 
